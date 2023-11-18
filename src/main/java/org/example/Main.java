@@ -9,6 +9,7 @@ public class Main {
 
         Window window = new Window();
         Events events = new Events();
+        Writer writer = new Writer();
 
     }
 
