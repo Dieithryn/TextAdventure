@@ -77,6 +77,7 @@ public class Window {
         textArea.setWrapStyleWord(true);
         textArea.setMargin(new Insets(10,10,10,10));
         textArea.setText(event.toString());
+
         //new scrollPane
         scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 

@@ -8,6 +8,7 @@ public class Inventory {
     private String matches = "matches";
     private String smallKnife = "small knife";
     public Inventory() {
+
         List<String> items = new ArrayList<String>();
     }
 }
