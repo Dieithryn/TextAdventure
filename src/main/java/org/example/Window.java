@@ -1,19 +1,12 @@
 package org.example;
 
-import jdk.jfr.Event;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.StandardOpenOption;
 
 
 public class Window {
@@ -25,12 +18,14 @@ public class Window {
     private JTextArea textArea;
     private JPanel panel;
     private JScrollPane scrollPane;
-    private String event = String.valueOf(new Events());
     private File newFile;
+    private Events events;
     protected String input;
 
 
     public Window() throws IOException {
+
+        events = new Events();
 
         //make frame
         frame = new JFrame("Text Adventure");
@@ -49,19 +44,20 @@ public class Window {
         textField.setBackground(Color.WHITE);
         textField.setFont(new Font("Times New Roman", Font.PLAIN, 18));
         textField.addActionListener(e -> {
-           input = textField.getText();
+            input = textField.getText();
             try {
                 newFile = new File("C:\\Users\\Luke\\IdeaProjects\\TextAdventure\\src\\main\\java\\org\\example\\newSaves\\newFile.txt");
                 if (!newFile.exists()) {
                     newFile.createNewFile();
                 }
                 FileWriter writer = new FileWriter(newFile.getAbsoluteFile(), true);
-                writer.append(input + "\n");
+                writer.append(input).append("\n");
+                writer.close();
 
                 //update text area text continually
                 textArea.append(input + "\n");
+                System.out.println(input);
 
-                writer.close();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -76,7 +72,6 @@ public class Window {
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setMargin(new Insets(10,10,10,10));
-        textArea.setText(event.toString());
 
         //new scrollPane
         scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -92,9 +87,15 @@ public class Window {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-
     }
 
+    public String getInput() {
+        return input;
+    }
+
+    public void setTextArea(String text) {
+        textArea.append(text);
+    }
 
 
 }
