@@ -1,18 +1,20 @@
 package org.example;
 
 
+
 import java.util.Scanner;
 
 public class StatesController {
 
+    private String inputFromWindow;
     protected States currentState;
 
     public StatesController() {
 
-        States stateZero = new States("ZERO", null, null);
-        States stateOne = new States("ONE", null, stateZero);
-        States stateTwo = new States("TWO", null, stateOne);
-        States stateThree = new States("THREE", null, stateTwo);
+        States stateZero = new States("ZERO \n", null, null);
+        States stateOne = new States("ONE \n", null, stateZero);
+        States stateTwo = new States("TWO \n", null, stateOne);
+        States stateThree = new States("THREE \n", null, stateTwo);
 
         stateZero.setNextState(stateOne);
         stateOne.setNextState(stateTwo);
@@ -30,8 +32,8 @@ public class StatesController {
     public void updateState() {
         while (true) {
             Scanner scanner = new Scanner(System.in);
-            String input = scanner.next();
-            if (input.equals("1")) {
+            inputFromWindow = scanner.next();
+            if (inputFromWindow.equals("1")) {
                 currentState = currentState.getNextState();
                 break;
             } else {
@@ -39,5 +41,6 @@ public class StatesController {
                 break;
             }
         }
-        }
     }
+
+}

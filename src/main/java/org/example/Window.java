@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 
 
 public class Window {
@@ -56,7 +57,6 @@ public class Window {
 
                 //update text area text continually
                 textArea.append(input + "\n");
-                System.out.println(input);
 
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
@@ -90,10 +90,12 @@ public class Window {
     }
 
     public String getInput() {
+
         return input;
     }
 
     public void setTextArea(String text) {
+
         textArea.append(text);
     }
 

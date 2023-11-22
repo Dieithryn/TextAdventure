@@ -14,13 +14,11 @@ public class Main {
         StatesController statesController = new StatesController();
 
 
-
-
-
-
         while (true) {
-            System.out.println(statesController.getCurrentState());
+
+            window.setTextArea(statesController.getCurrentState());
             statesController.updateState();
+
         }
 
 
