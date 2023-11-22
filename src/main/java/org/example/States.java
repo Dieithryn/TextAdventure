@@ -4,13 +4,21 @@ import java.util.Scanner;
 
 public class States {
     private String stateName;
-    static States currentState, nextState, previousState;
+    protected States nextState, previousState;
+
+        public States(String stateName, States nextState, States previousState) {
+
+            this.stateName = stateName;
+            this.nextState = nextState;
+            this.previousState = previousState;
+
+        }
+
         public void updateState() {
         while (true) {
             Scanner scanner = new Scanner(System.in);
             String input = scanner.next();
             if (input.equals("1")) {
-                currentState = nextState;
                 break;
             } else {
                 System.out.println("Eror");
@@ -19,19 +27,18 @@ public class States {
             }
         }
 
-        public void setState(States state) {
-            currentState = state;
-        }
-
         public void setNextState(States nextState) {
 
-            States.nextState = nextState;
+            this.nextState = nextState;
 
+        }
+        public States getNextState() {
+            return nextState;
         }
 
         public void setPrevState(States previousState) {
 
-            States.previousState = previousState;
+            this.previousState = previousState;
 
         }
 
@@ -40,9 +47,8 @@ public class States {
             this.stateName = stateName;
         }
 
-        public void getState() {
-
-            System.out.println(stateName);
+        public String getState() {
+            return stateName;
         }
 
 
