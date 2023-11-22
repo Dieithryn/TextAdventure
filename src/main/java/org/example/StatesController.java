@@ -2,14 +2,17 @@ package org.example;
 
 
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class StatesController {
 
-    private String inputFromWindow;
+    private Window window;
     protected States currentState;
 
-    public StatesController() {
+    public StatesController() throws IOException {
+
+        this.window = new Window(this::updateState);
 
         States stateZero = new States("ZERO \n", null, null);
         States stateOne = new States("ONE \n", null, stateZero);
@@ -20,8 +23,10 @@ public class StatesController {
         stateOne.setNextState(stateTwo);
 
         currentState = stateZero;
+        window.setTextArea("Press 1 to begin game \n");
 
     }
+
 
     public String getCurrentState() {
 
@@ -29,18 +34,18 @@ public class StatesController {
 
     }
 
-    public void updateState() {
-        while (true) {
-            Scanner scanner = new Scanner(System.in);
-            inputFromWindow = scanner.next();
-            if (inputFromWindow.equals("1")) {
-                currentState = currentState.getNextState();
-                break;
-            } else {
-                System.out.println("Eror");
-                break;
-            }
+    public void updateState(String inputFromWindow) {
+
+        System.out.println(inputFromWindow);
+
+        if (inputFromWindow.equals("1")) {
+            currentState = currentState.getNextState();
+            System.out.println(currentState.getState());
+            window.setTextArea(currentState.getState());
+        } else {
+            System.out.println("Eror");
         }
+
     }
 
 }

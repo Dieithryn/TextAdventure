@@ -9,7 +9,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 
-
+interface InputHandler {
+    public void op(String input);
+}
 public class Window {
 
     private int width = 640;
@@ -24,7 +26,7 @@ public class Window {
     protected String input;
 
 
-    public Window() throws IOException {
+    public Window(InputHandler inputHandler) throws IOException {
 
         events = new Events();
 
@@ -57,6 +59,7 @@ public class Window {
 
                 //update text area text continually
                 textArea.append(input + "\n");
+                inputHandler.op(input);
 
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
@@ -92,6 +95,7 @@ public class Window {
     public String getInput() {
 
         return input;
+
     }
 
     public void setTextArea(String text) {
