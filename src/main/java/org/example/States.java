@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class States {
     private String stateName;
+    private String stateText;
     protected States nextState, previousState;
 
         public States(String stateName, States nextState, States previousState) {
@@ -14,28 +15,14 @@ public class States {
 
         }
 
-        public void updateState() {
-        while (true) {
-            Scanner scanner = new Scanner(System.in);
-            String input = scanner.next();
-            if (input.equals("1")) {
-                break;
-            } else {
-                System.out.println("Eror");
-                break;
-            }
-            }
+        public void setStateText(String stateText) {
+            this.stateText = stateText;
         }
-
         public void setNextState(States nextState) {
 
             this.nextState = nextState;
 
         }
-        public States getNextState() {
-            return nextState;
-        }
-
         public void setPrevState(States previousState) {
 
             this.previousState = previousState;
@@ -46,11 +33,24 @@ public class States {
 
             this.stateName = stateName;
         }
+        public States getNextState() {
 
-        public String getState() {
-            return stateName;
+            return nextState;
         }
+        public States getPreviousState() {
 
+            return previousState;
+
+        }
+        public String getState() {
+
+            return this.stateName;
+        }
+        public String getStateText() {
+
+            return stateText;
+
+        }
 
 
 }

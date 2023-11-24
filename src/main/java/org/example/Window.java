@@ -22,13 +22,11 @@ public class Window {
     private JPanel panel;
     private JScrollPane scrollPane;
     private File newFile;
-    private Events events;
     protected String input;
 
 
-    public Window(InputHandler inputHandler) throws IOException {
+    public Window(InputHandler inputHandler) {
 
-        events = new Events();
 
         //make frame
         frame = new JFrame("Text Adventure");
@@ -54,11 +52,14 @@ public class Window {
                     newFile.createNewFile();
                 }
                 FileWriter writer = new FileWriter(newFile.getAbsoluteFile(), true);
-                writer.append(input).append("\n");
+                writer.append("> ").append(input).append("\n");
                 writer.close();
 
                 //update text area text continually
-                textArea.append(input + "\n");
+                textArea.append("> " + input + "\n");
+
+                input.replace(" ", "").toLowerCase();
+
                 inputHandler.op(input);
 
             } catch (IOException ex) {
@@ -102,7 +103,6 @@ public class Window {
 
         textArea.append(text);
     }
-
 
 }
 
