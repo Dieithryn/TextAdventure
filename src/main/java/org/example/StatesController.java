@@ -45,7 +45,7 @@ public class StatesController {
 
         stateOne.setNextState(stateTwo);
 
-        stateOne.setStateText("You are in a rainforest. The only sound is the harsh wind blustering through the trees. The wildlife has taken shelter from the oncoming storm. You have a compass, a dead walkie-talkie, 2 matches, and a small pocket knife.");
+        stateOne.setStateText("You are in a rainforest. The it is silent save for a harsh wind blustering through the trees. The wildlife has taken shelter from the oncoming storm. You have a compass, a dead walkie-talkie, 2 matches, and a small pocket knife.");
 
         stateTwo.setStateText("You journey south. The rainforest thickens around you. The canopy above blots out the little light you had left from the overcast sky. A small snake slithers by your foot.");
 
