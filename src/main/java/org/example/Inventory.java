@@ -1,37 +1,28 @@
 package org.example;
 
 public class Inventory {
-    protected String[][] items;
+
+    private Item compass;
+    private Item walkieTalkie;
+    private Item matches;
+    protected Item[] items;
 
     public Inventory() {
 
-        items = new String[5][2];
+        items = new Item[5];
 
     }
 
     public String getInventory(int i) {
 
-        return items[i][0] + " " + items[i][1];
+        return items[i].getName();
 
     }
 
     public int getQuantity(int i) {
 
-        int quantity = Integer.parseInt(items[i][1]);
-        return quantity;
 
-    }
-
-
-    public void setInventory (String item, int i) {
-
-            items[i][0] = item;
-
-    }
-
-    public void setQuantity (int quantity, int i) {
-
-            items[i][1] = Integer.toString(quantity);
+        return items[i].getQuantity();
 
     }
 }

@@ -25,7 +25,6 @@ public class CommandNode {
 
         this.right = right;
     }
-
     public CommandNode getLeft() {
 
         return left;

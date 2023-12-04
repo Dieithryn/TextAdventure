@@ -27,12 +27,6 @@ public class StatesController {
         //create new inventory
         inventory = new Inventory();
 
-        //load inventory with 0 for all items
-        quantityInitial = "0";
-        for (int i = 0; i < inventory.items.length; i++) {
-            inventory.items[i][1] = quantityInitial;
-        }
-
         //initialize states that will control text on screen
         stateZero = new States("ZERO \n", null, null);
         stateOne = new States("ONE \n", null, stateZero);
@@ -45,7 +39,7 @@ public class StatesController {
 
         stateOne.setNextState(stateTwo);
 
-        stateOne.setStateText("You are in a rainforest. The it is silent save for a harsh wind blustering through the trees. The wildlife has taken shelter from the oncoming storm. You have a compass, a dead walkie-talkie, 2 matches, and a small pocket knife.");
+        stateOne.setStateText("You are in a rainforest. The it is silent save for a harsh wind blustering through the trees. The wildlife has taken shelter from the oncoming storm. You have a compass, a dead walkie-talkie,and 2 matches.");
 
         stateTwo.setStateText("You journey south. The rainforest thickens around you. The canopy above blots out the little light you had left from the overcast sky. A small snake slithers by your foot.");
 
@@ -75,17 +69,6 @@ public class StatesController {
         if (inputFromWindow.equals("") && currentState.getState().equals("ZERO \n")) {
             currentState = currentState.getNextState();
 
-            inventory.setInventory("Walkie-talkie", 0);
-            inventory.setQuantity(1,0);
-
-            inventory.setInventory("Matches", 1);
-            inventory.setQuantity(2, 1);
-
-            inventory.setInventory("Small knife", 2);
-            inventory.setQuantity(1,2);
-
-            System.out.println(inventory.getInventory(1));
-            System.out.println(inventory.getInventory(4));
             System.out.println(currentState.getStateText() + "\n");
             window.setTextArea(currentState.getStateText() + "\n");
 
