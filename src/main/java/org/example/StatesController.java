@@ -69,6 +69,10 @@ public class StatesController {
         if (inputFromWindow.equals("") && currentState.getState().equals("ZERO \n")) {
             currentState = currentState.getNextState();
 
+            inventory.setQuantity(0,1);
+            inventory.setQuantity(1,1);
+            inventory.setQuantity(2, 2);
+
             System.out.println(currentState.getStateText() + "\n");
             window.setTextArea(currentState.getStateText() + "\n");
 
