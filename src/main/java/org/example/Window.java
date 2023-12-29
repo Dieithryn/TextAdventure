@@ -5,6 +5,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Locale;
 
 interface InputHandler {
     public void op(String input);
@@ -55,7 +56,6 @@ public class Window {
                 //update text area text continually
                 textArea.append("> " + input + "\n");
 
-                input.replace(" ", "").toLowerCase();
 
                 inputHandler.op(input);
 
@@ -65,7 +65,6 @@ public class Window {
         });
 
         //new text area attributes
-
         textArea = new JTextArea();
         textArea.setBackground(Color.WHITE);
         textArea.setFont(new Font("Times New Roman", Font.PLAIN, 18));

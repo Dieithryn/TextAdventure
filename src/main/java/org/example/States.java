@@ -1,55 +1,47 @@
 package org.example;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
+import java.io.IOException;
+
 public class States {
+    private String stateTexts;
     private String stateName;
-    private String stateText;
-    protected States nextState, previousState;
+    private String currentState;
+    private JsonNode stateNode;
+    private JsonNode stateTextNode;
+    private ObjectMapper objectMapper;
 
-        public States(String stateName, States nextState, States previousState) {
 
-            this.stateName = stateName;
-            this.nextState = nextState;
-            this.previousState = previousState;
+        public States() throws IOException {
 
-        }
-
-        public void setStateText(String stateText) {
-            this.stateText = stateText;
-        }
-        public void setNextState(States nextState) {
-
-            this.nextState = nextState;
+            objectMapper = new ObjectMapper();
+            stateNode = objectMapper.readTree(new File("C:\\Users\\Luke\\IdeaProjects\\TextAdventure\\src\\main\\resources\\StateTexts.json"));
 
         }
-        public void setPrevState(States previousState) {
+        public String getStateText(String stateName) {
 
-            this.previousState = previousState;
+            try {
+                stateTextNode = stateNode.get(stateName);
+                stateTexts = objectMapper.writeValueAsString(stateTextNode.get("stateText"));
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
 
+            return stateTexts;
         }
 
-        public void setStateName(String stateName) {
+        public String getCurrentState() {
 
-            this.stateName = stateName;
+            currentState = stateName;
+            return currentState;
         }
-        public States getNextState() {
 
-            return nextState;
-        }
-        public States getPreviousState() {
 
-            return previousState;
-
-        }
-        public String getState() {
-
-            return this.stateName;
-        }
-        public String getStateText() {
-
-            return stateText;
-
-        }
 
 
 }
