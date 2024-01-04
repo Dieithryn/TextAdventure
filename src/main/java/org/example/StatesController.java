@@ -1,10 +1,10 @@
 package org.example;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.sun.source.tree.BinaryTree;
 
 import java.io.IOException;
+import java.util.Objects;
 
 
 public class StatesController {
@@ -12,10 +12,11 @@ public class StatesController {
 
     private Window window;
     private Inventory inventory;
-    private ObjectMapper objectMapper;
+    private String stateZero = "StateZero";
+    private StatesBinarySearchTree stateTree;
     protected States states;
 
-    public StatesController() throws IOException {
+    public StatesController() {
 
         //create window and pass back updateState function to detect input from window
         this.window = new Window(this::updateState);
@@ -23,10 +24,16 @@ public class StatesController {
         //create new inventory
         inventory = new Inventory();
 
-        //make states available to objectMapper so the JSON file can be read and parsed
+        //create states object
         states = new States();
+        states.setState(stateZero);
 
-        window.setTextArea("Press enter to begin game" + "\n");
+        stateTree = new StatesBinarySearchTree();
+
+        window.setTextArea(states.getStateText(stateZero) + "\n");
+
+
+
 
     }
 
@@ -34,6 +41,20 @@ public class StatesController {
 
         inputFromWindow = inputFromWindow.toLowerCase();
         inputFromWindow = inputFromWindow.replace(" ", "");
+
+        if (inputFromWindow.isEmpty() && Objects.equals(states.getCurrentState(), "StateZero")){
+
+            states.setState("StateStart");
+            window.setTextArea(states.getStateText("StateStart") + "\n");
+
+        }
+
+        if (inputFromWindow.equals("gosouth") && Objects.equals(states.getCurrentState(), "StateStart")) {
+
+            states.setState("StateSnake");
+            window.setTextArea(states.getStateText("StateSnake") + "\n");
+
+        }
 
 
     }

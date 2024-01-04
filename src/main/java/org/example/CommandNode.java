@@ -4,11 +4,11 @@ public class CommandNode {
 
 
     private String command;
-    private States nextState;
+    private String nextState;
     private CommandNode left;
     private CommandNode right;
 
-    public CommandNode(String command, States nextState) {
+    public CommandNode(String command, String nextState) {
 
         this.command = command;
         this.nextState = nextState;
