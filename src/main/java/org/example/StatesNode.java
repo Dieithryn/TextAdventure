@@ -5,6 +5,8 @@ public class StatesNode extends BinarySearchTreeNode<String> {
     StatesNode left;
     StatesNode right;
     String key;
+    int count = 0;
+    int numKey;
     public StatesNode() {
 
     }
@@ -12,8 +14,10 @@ public class StatesNode extends BinarySearchTreeNode<String> {
     public StatesNode(String state) {
 
         this.key = state;
+        this.numKey = count;
         this.left = new StatesNode();
         this.right = new StatesNode();
+        count++;
 
     }
 
@@ -21,6 +25,15 @@ public class StatesNode extends BinarySearchTreeNode<String> {
 
         return key;
 
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public int getNumKey() {
+
+        return numKey;
     }
 
 }

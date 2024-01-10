@@ -6,6 +6,7 @@ public abstract class BinarySearchTreeNode<T> {
         BinarySearchTreeNode<T> left;
         BinarySearchTreeNode<T> right;
         T key;
+        T count;
 
         BinarySearchTreeNode() {
 

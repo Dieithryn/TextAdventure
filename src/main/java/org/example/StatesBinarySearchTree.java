@@ -1,45 +1,43 @@
 package org.example;
 
-import java.util.Objects;
 
 public class StatesBinarySearchTree {
 
     private StatesNode root;
-    private StatesNode newNode;
 
     public StatesBinarySearchTree() {
 
-        this.root = new StatesNode("StateStart");
+        root = new StatesNode();
 
     }
 
-    public void insertNode(String state) {
+    public StatesNode insertNode(StatesNode newNode, int index) {
 
-        this.newNode = this.root;
 
-        if (this.newNode != null) {
-            if (this.newNode.left == null) {
 
-                this.newNode = this.newNode.left;
+        if (this.root == null) {
 
-            } else if (this.newNode.right == null) {
+            newNode = new StatesNode(newNode.getKey());
+            this.root = newNode;
 
-                this.newNode = this.newNode.right;
+        } else if (this.root.left == null && index < (root.getCount()/2)) {
 
-            }
+            this.root.left = insertNode(this.root.left, index);
+
+        } else if (this.root.right == null && index > (root.getCount()/2)) {
+
+            this.root.right = insertNode(this.root.right, index);
+
+        } else if (this.root.left != null && index < (root.getCount()/2)) {
+
+            this.root.left = insertNode(this.root.left, index);
+
+        } else if (this.root.right != null && index > (root.getCount()/2)) {
+
+            this.root.right = insertNode(this.root.right, index);
         }
 
-        if (this.newNode == null) {
-
-            newNode = new StatesNode(state);
-
-            if (this.newNode != null) {
-
-                newNode = this.root;
-
-            }
-        }
-
+        return root;
 
     }
 

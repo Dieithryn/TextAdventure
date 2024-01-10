@@ -19,6 +19,7 @@ public class States {
         public States() {
 
             objectMapper = new ObjectMapper();
+
             try {
                 stateNode = objectMapper.readTree(new File("C:\\Users\\Luke\\IdeaProjects\\TextAdventure\\src\\main\\resources\\StateTexts.json"));
             } catch (IOException e) {
@@ -27,9 +28,12 @@ public class States {
 
         }
 
-        public void setState(String state) {
-
-            this.currentState = state;
+        public String getStateName() {
+            try {
+                return objectMapper.writeValueAsString(stateNode.fieldNames());
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
 
         }
         public String getStateText(String stateName) {
@@ -50,6 +54,7 @@ public class States {
 
             return currentState;
         }
+
 
 
 
