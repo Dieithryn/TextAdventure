@@ -1,19 +1,17 @@
 package org.example;
 
-
-import com.sun.source.tree.BinaryTree;
-
-import java.io.IOException;
+import java.util.Iterator;
 import java.util.Objects;
 
 
 public class StatesController {
 
-    private int count = 0;
     private Window window;
     private Inventory inventory;
     private StatesBinarySearchTree stateTree;
     private StatesNode stateNode;
+    private Iterator<String> iter;
+    protected int count;
     protected States states;
 
     public StatesController() {
@@ -28,11 +26,27 @@ public class StatesController {
 
         states = new States();
 
-        stateNode = new StatesNode(states.getStateName());
+        stateNode = new StatesNode();
 
-        stateTree.insertNode(stateNode, stateNode.getCount());
+        iter = states.getStateNames();
+        while (iter.hasNext()) {
 
+            stateNode.setCount(count++);
+            iter.next();
 
+        }
+
+        iter = states.getStateNames();
+        count = 0;
+
+        while (iter.hasNext()) {
+
+            stateNode.key = iter.next();
+            stateNode.numKey = count;
+            stateTree.insertNode(stateNode, count);
+            count++;
+
+        }
     }
 
     public void updateState(String inputFromWindow) {

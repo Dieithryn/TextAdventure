@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
 
 public class States {
     private String stateTexts;
@@ -28,12 +30,9 @@ public class States {
 
         }
 
-        public String getStateName() {
-            try {
-                return objectMapper.writeValueAsString(stateNode.fieldNames());
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
+        public Iterator<String> getStateNames() {
+
+            return stateNode.fieldNames();
 
         }
         public String getStateText(String stateName) {

@@ -2,11 +2,12 @@ package org.example;
 
 public class StatesNode extends BinarySearchTreeNode<String> {
 
-    StatesNode left;
-    StatesNode right;
-    String key;
-    int count = 0;
-    int numKey;
+    protected StatesNode left;
+    protected StatesNode right;
+    protected String key;
+    protected int count;
+    protected int numKey;
+
     public StatesNode() {
 
     }
@@ -14,13 +15,20 @@ public class StatesNode extends BinarySearchTreeNode<String> {
     public StatesNode(String state) {
 
         this.key = state;
-        this.numKey = count;
         this.left = new StatesNode();
         this.right = new StatesNode();
-        count++;
+        this.numKey = count;
 
     }
 
+    public void setCount(int count) {
+
+        this.count = count;
+
+    }
+    public void setKey(String key) {
+        this.key = key;
+    }
     public String getKey(StatesNode node) {
 
         return key;
@@ -28,6 +36,7 @@ public class StatesNode extends BinarySearchTreeNode<String> {
     }
 
     public int getCount() {
+
         return count;
     }
 
