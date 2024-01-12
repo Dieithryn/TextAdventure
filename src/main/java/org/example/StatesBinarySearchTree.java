@@ -11,19 +11,23 @@ public class StatesBinarySearchTree {
 
     }
 
-    public StatesNode insertNode(StatesNode newNode, int index) {
+    public StatesNode insertNode(String stateName, int numKey){
+
+        return insertNode(new StatesNode(stateName, numKey), numKey);
+
+    }
+    private StatesNode insertNode(StatesNode newNode, int index) {
+
 
         if (this.root == null) {
 
-            newNode = new StatesNode(newNode.key);
             this.root = newNode;
 
-        }
-        if (index < (root.getNumKey())) {
+        }else if (index < (newNode.getNumKey())) {
 
             this.root.left = insertNode(this.root.left, index);
 
-        } else if (index > (root.getNumKey())) {
+        } else if (index > (newNode.getNumKey())) {
 
             this.root.right = insertNode(this.root.right, index);
 
@@ -32,20 +36,20 @@ public class StatesBinarySearchTree {
         return root;
 
     }
-    public StatesNode search (int numKey) {
+    public StatesNode search(int numKey) {
         return search(root, numKey);
     }
     private StatesNode search(StatesNode rootNode, int numKey) {
-        if (root == null) {
+        if (rootNode == null) {
             return null;
         }
-        if (root.getNumKey() == numKey) {
+        if (rootNode.getNumKey() == numKey) {
             return root;
         }
-        if (root.getNumKey() > numKey) {
-            return search(root.left, numKey);
+        if (rootNode.getNumKey() > numKey) {
+            return search(rootNode.left, numKey);
         } else {
-            return search(root.right, numKey);
+            return search(rootNode.right, numKey);
         }
     }
 }

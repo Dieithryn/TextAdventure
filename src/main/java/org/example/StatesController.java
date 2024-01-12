@@ -26,27 +26,15 @@ public class StatesController {
 
         states = new States();
 
-        stateNode = new StatesNode();
-
         iter = states.getStateNames();
         while (iter.hasNext()) {
 
-            stateNode.setCount(count++);
-            iter.next();
-
-        }
-
-        iter = states.getStateNames();
-        count = 0;
-
-        while (iter.hasNext()) {
-
-            stateNode.key = iter.next();
-            stateNode.numKey = count;
-            stateTree.insertNode(stateNode, count);
+            stateTree.insertNode(iter.next(), count);
             count++;
 
         }
+
+        System.out.println(stateTree.search(1));
     }
 
     public void updateState(String inputFromWindow) {
