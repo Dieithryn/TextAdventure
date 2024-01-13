@@ -12,12 +12,12 @@ public class StatesNode extends BinarySearchTreeNode<String> {
 
     }
 
-    public StatesNode(String state, int numKey) {
+    public StatesNode(int numKey) {
 
-        this.key = state;
         this.numKey = numKey;
-        this.left = new StatesNode();
-        this.right = new StatesNode();
+        this.left = null;
+        this.right = null;
+
     }
 
     public void setCount(int count) {

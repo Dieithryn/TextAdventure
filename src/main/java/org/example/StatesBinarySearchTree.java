@@ -3,48 +3,49 @@ package org.example;
 
 public class StatesBinarySearchTree {
 
-    private StatesNode root;
+    protected StatesNode root;
 
     public StatesBinarySearchTree() {
 
-        root = new StatesNode();
+        this.root = null;
 
     }
 
-    public StatesNode insertNode(String stateName, int numKey){
+    public StatesNode insertNode(int numKey) {
 
-        return insertNode(new StatesNode(stateName, numKey), numKey);
+        return insertNode(this.root, numKey);
 
     }
-    private StatesNode insertNode(StatesNode newNode, int index) {
+    private StatesNode insertNode(StatesNode root, int index) {
 
 
-        if (this.root == null) {
+        if (root == null) {
 
-            this.root = newNode;
+            root = new StatesNode(index);
+            return root;
+        }
+        if (index < (root.getNumKey())) {
 
-        }else if (index < (newNode.getNumKey())) {
+            root.left = insertNode(root.left, index);
 
-            this.root.left = insertNode(this.root.left, index);
+        } else if (index >= (root.getNumKey())) {
 
-        } else if (index > (newNode.getNumKey())) {
-
-            this.root.right = insertNode(this.root.right, index);
+            root.right = insertNode(root.right, index);
 
         }
 
         return root;
 
     }
+
     public StatesNode search(int numKey) {
-        return search(root, numKey);
+        return search(this.root, numKey);
     }
     private StatesNode search(StatesNode rootNode, int numKey) {
-        if (rootNode == null) {
-            return null;
-        }
-        if (rootNode.getNumKey() == numKey) {
-            return root;
+        if (rootNode == null || rootNode.getNumKey() == numKey) {
+
+            return rootNode;
+
         }
         if (rootNode.getNumKey() > numKey) {
             return search(rootNode.left, numKey);

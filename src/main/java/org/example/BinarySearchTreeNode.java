@@ -10,10 +10,6 @@ public abstract class BinarySearchTreeNode<T> {
 
         BinarySearchTreeNode() {
 
-                this.key = null;
-                this.left = null;
-                this.right = null;
-                this.count = null;
 
         }
 
