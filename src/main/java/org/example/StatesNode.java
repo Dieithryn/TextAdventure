@@ -6,42 +6,34 @@ public class StatesNode extends BinarySearchTreeNode<String> {
     protected StatesNode right;
     protected String key;
     protected int count;
+    protected int height;
     protected int numKey;
 
     public StatesNode() {
 
     }
 
-    public StatesNode(int numKey) {
+    public StatesNode(String stateName, int numKey) {
 
+        this.key = stateName;
         this.numKey = numKey;
+        this.height = 1;
         this.left = null;
         this.right = null;
 
     }
-
-    public void setCount(int count) {
-
-        this.count = count;
-
-    }
-    public void setKey(String key) {
-        this.key = key;
-    }
-    public String getKey(StatesNode node) {
+    @Override
+    public String getKey() {
 
         return key;
 
     }
 
-    public int getCount() {
-
-        return count;
-    }
-
     public int getNumKey() {
 
         return numKey;
+
     }
+
 
 }
