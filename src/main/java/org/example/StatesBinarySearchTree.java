@@ -1,7 +1,6 @@
 package org.example;
 
 
-import static javax.swing.Spring.height;
 
 public class StatesBinarySearchTree {
 
