@@ -1,37 +1,43 @@
 package org.example;
 
 
+import java.text.Collator;
+import java.util.Locale;
 
 public class StatesBinarySearchTree {
 
     protected StatesNode root;
+
+    private final Collator usCollator = Collator.getInstance(Locale.US);
+
 
     public StatesBinarySearchTree() {
 
         this.root = null;
 
     }
-    public StatesNode insertNode(String stateName, int numKey) {
+    public StatesNode insertNode(String stateName) {
 
-        return insertNode(this.root, stateName, numKey);
+        return insertNode(this.root, stateName);
 
     }
-    private StatesNode insertNode(StatesNode root, String stateName, int index) {
+    private StatesNode insertNode(StatesNode root, String stateName) {
 
+        usCollator.setStrength(Collator.PRIMARY);
 
         //insertion logic
         if (root == null) {
 
-            root = new StatesNode(stateName, index);
+            root = new StatesNode(stateName);
             return root;
         }
-        if (index < (root.getNumKey())) {
+        if (usCollator.compare(stateName, root.getKey()) < 0) {
 
-            root.left = insertNode(root.left, stateName, index);
+            root.left = insertNode(root.left, stateName);
 
-        } else if (index >= (root.getNumKey())) {
+        } else if (usCollator.compare(stateName, root.getKey()) > 0) {
 
-            root.right = insertNode(root.right, stateName, index);
+            root.right = insertNode(root.right, stateName);
 
         } else {
             return root;
@@ -42,18 +48,18 @@ public class StatesBinarySearchTree {
 
 
         // auto-balancing logic
-        if (balance > 1 && index < root.left.getNumKey()) {
+        if (balance > 1 && usCollator.compare(stateName, root.getKey()) < 0) {
             return rightRotate(root);
 
         }
-        if (balance < -1 && index > root.right.getNumKey()) {
+        if (balance < -1 && usCollator.compare(stateName, root.getKey()) > 0) {
             return leftRotate(root);
         }
-        if (balance > 1 && index > root.left.getNumKey()) {
+        if (balance > 1 && usCollator.compare(stateName, root.getKey()) > 0) {
             root.left = leftRotate(root.left);
             return rightRotate(root);
         }
-        if (balance < -1 && index < root.right.getNumKey()) {
+        if (balance < -1 && usCollator.compare(stateName, root.getKey()) < 0) {
             root.right = rightRotate(root.right);
             return leftRotate(root);
         }
@@ -102,20 +108,21 @@ public class StatesBinarySearchTree {
         return getHeight(node.left) - getHeight(node.right);
     }
 
-    public StatesNode searchForNode(int numKey) {
-        return searchForNode(this.root, numKey);
+    public StatesNode searchForNode(String stateName) {
+        return searchForNode(this.root, stateName);
     }
-    private StatesNode searchForNode(StatesNode rootNode, int numKey) {
+    private StatesNode searchForNode(StatesNode rootNode, String key) {
 
-        if (rootNode == null || rootNode.getNumKey() == numKey) {
+        usCollator.setStrength(Collator.PRIMARY);
+
+        if (rootNode == null || usCollator.compare(key, rootNode.getKey()) == 0) {
 
             return rootNode;
-
         }
-        if (rootNode.getNumKey() > numKey) {
-            return searchForNode(rootNode.left, numKey);
+        if (usCollator.compare(key, rootNode.getKey()) < 0) {
+            return searchForNode(rootNode.left, key);
         } else {
-            return searchForNode(rootNode.right, numKey);
+            return searchForNode(rootNode.right, key);
         }
     }
 

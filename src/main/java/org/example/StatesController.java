@@ -28,20 +28,15 @@ public class StatesController {
         //instantiate to call file with state names later
         states = new States();
 
-
-        //set root to null node
-        stateTree.root = stateTree.insertNode(null,0);
-
         //reset iterator and count to load states into state tree
         iter = states.getStateNames();
-        count = 1;
         while (iter.hasNext()) {
 
-            stateTree.root = stateTree.insertNode(iter.next(), count);
-            count++;
+            stateTree.root = stateTree.insertNode(iter.next());
 
         }
 
+        System.out.println(stateTree.searchForNode("StateZero"));
 
     }
 
