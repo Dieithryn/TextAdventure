@@ -4,40 +4,46 @@ package org.example;
 import java.text.Collator;
 import java.util.Locale;
 
-public class StatesBinarySearchTree {
+public class BinarySearchTree {
 
-    protected StatesNode root;
+    protected Node root;
 
     private final Collator usCollator = Collator.getInstance(Locale.US);
 
 
-    public StatesBinarySearchTree() {
+    public BinarySearchTree() {
 
         this.root = null;
 
     }
-    public StatesNode insertNode(String stateName) {
+    public Node insertNode(String stateName, String stateText, BinarySearchTree commandTree) {
 
-        return insertNode(this.root, stateName);
+        return insertNode(this.root, stateName, stateText, commandTree);
 
     }
-    private StatesNode insertNode(StatesNode root, String stateName) {
+    private Node insertNode(Node root, String stateName, String stateText, BinarySearchTree commandTree) {
 
         usCollator.setStrength(Collator.PRIMARY);
 
         //insertion logic
-        if (root == null) {
+        if (root == null && commandTree == null) {
 
-            root = new StatesNode(stateName);
+            root = new Node(stateName, stateText);
+            return root;
+
+        } else if (root == null && commandTree != null){
+
+            root = new StatesNode(stateName, stateText, commandTree);
             return root;
         }
+
         if (usCollator.compare(stateName, root.getKey()) < 0) {
 
-            root.left = insertNode(root.left, stateName);
+            root.left = insertNode(root.left, stateName, stateText, commandTree);
 
         } else if (usCollator.compare(stateName, root.getKey()) > 0) {
 
-            root.right = insertNode(root.right, stateName);
+            root.right = insertNode(root.right, stateName, stateText, commandTree);
 
         } else {
             return root;
@@ -67,7 +73,7 @@ public class StatesBinarySearchTree {
         return root;
 
     }
-    private int getHeight(StatesNode node) {
+    private int getHeight(Node node) {
         if (node == null) {
             return 0;
         }
@@ -75,9 +81,9 @@ public class StatesBinarySearchTree {
         return node.height;
     }
 
-    private StatesNode rightRotate(StatesNode nodeOne) {
-        StatesNode nodeTwo = nodeOne.left;
-        StatesNode nodeThree = nodeTwo.right;
+    private Node rightRotate(Node nodeOne) {
+        Node nodeTwo = nodeOne.left;
+        Node nodeThree = nodeTwo.right;
 
         nodeTwo.right = nodeOne;
         nodeOne.left = nodeThree;
@@ -88,9 +94,9 @@ public class StatesBinarySearchTree {
         return nodeTwo;
     }
 
-    private StatesNode leftRotate(StatesNode nodeOne) {
-        StatesNode nodeTwo = nodeOne.right;
-        StatesNode nodeThree = nodeTwo.left;
+    private Node leftRotate(Node nodeOne) {
+        Node nodeTwo = nodeOne.right;
+        Node nodeThree = nodeTwo.left;
 
         nodeTwo.left = nodeOne;
         nodeOne.right = nodeThree;
@@ -101,17 +107,17 @@ public class StatesBinarySearchTree {
         return nodeTwo;
     }
 
-    private int getBalance(StatesNode node) {
+    private int getBalance(Node node) {
         if (node == null)
             return 0;
 
         return getHeight(node.left) - getHeight(node.right);
     }
 
-    public StatesNode searchForNode(String stateName) {
+    public Node searchForNode(String stateName) {
         return searchForNode(this.root, stateName);
     }
-    private StatesNode searchForNode(StatesNode rootNode, String key) {
+    private Node searchForNode(Node rootNode, String key) {
 
         usCollator.setStrength(Collator.PRIMARY);
 
@@ -124,6 +130,7 @@ public class StatesBinarySearchTree {
         } else {
             return searchForNode(rootNode.right, key);
         }
+
     }
 
 

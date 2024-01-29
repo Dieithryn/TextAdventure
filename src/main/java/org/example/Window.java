@@ -55,7 +55,7 @@ public class Window {
 
                 //update text area text continually
                 textArea.append("> " + input + "\n");
-
+                textField.setText("");
 
                 inputHandler.op(input);
 
@@ -86,12 +86,6 @@ public class Window {
         frame.setAlwaysOnTop(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-
-    }
-
-    public String getInput() {
-
-        return input;
 
     }
 

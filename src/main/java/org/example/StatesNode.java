@@ -1,32 +1,23 @@
 package org.example;
 
-public class StatesNode extends BinarySearchTreeNode<String> {
+public class StatesNode extends Node{
 
-    protected StatesNode left;
-    protected StatesNode right;
-    protected String key;
-    protected int count;
-    protected int height;
+    protected BinarySearchTree commandTree;
 
-    public StatesNode() {
+    public StatesNode(String key, String text, BinarySearchTree commandTree) {
 
-    }
-
-    public StatesNode(String stateName) {
-
-        this.key = stateName;
+        this.commandTree = commandTree;
+        this.key = key;
+        this.text = text;
         this.height = 1;
         this.left = null;
         this.right = null;
 
     }
     @Override
-    public String getKey() {
+    public Node getCommandNode(String command){
 
-        return key;
+        return commandTree.searchForNode(command);
 
     }
-
-
-
 }

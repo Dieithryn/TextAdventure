@@ -1,17 +1,18 @@
 package org.example;
 
 import java.util.Iterator;
-import java.util.Objects;
 
 
 public class StatesController {
 
+    private String stateName;
+    private String commandName;
     private Window window;
     private Inventory inventory;
-    private StatesBinarySearchTree stateTree;
-    private StatesNode stateNode;
-    private Iterator<String> iter;
-    protected int count;
+    private BinarySearchTree stateTree;
+    private BinarySearchTree commandsTree;
+    private Iterator<String> statesIter;
+    private Iterator<String> commandsIter;
     protected States states;
 
     public StatesController() {
@@ -20,30 +21,57 @@ public class StatesController {
         this.window = new Window(this::updateState);
 
         //create new inventory
-        inventory = new Inventory();
+        this.inventory = new Inventory();
 
         //create state tree
-        stateTree = new StatesBinarySearchTree();
+        this.stateTree = new BinarySearchTree();
 
         //instantiate to call file with state names later
-        states = new States();
+        this.states = new States();
+
 
         //reset iterator and count to load states into state tree
-        iter = states.getStateNames();
-        while (iter.hasNext()) {
+        this.statesIter = states.getStateNames();
+        while (statesIter.hasNext()) {
 
-            stateTree.root = stateTree.insertNode(iter.next());
+            stateName = statesIter.next();
+
+
+                commandsTree = new BinarySearchTree();
+                commandsIter = states.getCommands(stateName);
+
+                if (states.getCommands(stateName) != null) {
+
+                    while (commandsIter.hasNext()) {
+
+                        commandName = commandsIter.next();
+                        commandsTree.root = commandsTree.insertNode(commandName, states.getNextState(stateName, commandName), null);
+
+                    }
+                }
+
+            stateTree.root = stateTree.insertNode(stateName, states.getStateText(stateName), commandsTree);
 
         }
 
-        System.out.println(stateTree.searchForNode("StateZero"));
-
+        window.setTextArea(stateTree.searchForNode("StateZero").getText() + "\n");
+        states.setCurrentState(stateTree.searchForNode("StateZero").getKey());
     }
 
     public void updateState(String inputFromWindow) {
 
-        inputFromWindow = inputFromWindow.toLowerCase();
-        inputFromWindow = inputFromWindow.replace(" ", "");
+        inputFromWindow = inputFromWindow.toLowerCase().replace(" ", "");;
+
+        try {
+
+            states.setCurrentState(stateTree.searchForNode(states.getCurrentState()).getCommandNode(inputFromWindow).getText());
+            window.setTextArea(states.getStateText(states.getCurrentState()) + "\n");
+
+        } catch (NullPointerException e) {
+
+            window.setTextArea("Invalid input \n");
+
+        }
 
 
     }

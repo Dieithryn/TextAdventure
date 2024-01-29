@@ -8,13 +8,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.Map;
+
 
 public class States {
-    private String stateTexts;
     private String currentState;
+    private String stateTexts;
+    private String nextState;
     private JsonNode stateNode;
     private JsonNode stateTextNode;
+    private JsonNode commandsNode;
     private ObjectMapper objectMapper;
 
 
@@ -27,6 +29,12 @@ public class States {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+        }
+
+        public void setCurrentState(String state) {
+
+            this.currentState = state;
 
         }
 
@@ -49,11 +57,37 @@ public class States {
             return stateTexts;
         }
 
-        public String getCurrentState() {
+    public Iterator<String> getCommands(String stateName) {
 
-            return currentState;
+        commandsNode = stateNode.get(stateName);
+        commandsNode = commandsNode.get("commands");
+        if (commandsNode != null) {
+            return commandsNode.fieldNames();
+        } else {
+            return null;
+        }
+    }
+
+    public String getNextState(String stateName, String command) {
+
+        commandsNode = stateNode.get(stateName);
+        commandsNode = commandsNode.get("commands");
+        try {
+            nextState = objectMapper.writeValueAsString(commandsNode.get(command));
+            nextState = nextState.replace("\"", "");
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
 
+
+        return nextState;
+    }
+
+    public String getCurrentState() {
+
+            return currentState;
+
+    }
 
 
 
