@@ -20,4 +20,8 @@ public class StatesNode extends Node{
         return commandTree.searchForNode(command);
 
     }
+
+    public BinarySearchTree getCommandTree() {
+        return commandTree;
+    }
 }

@@ -2,12 +2,15 @@ package org.example;
 
 
 import java.text.Collator;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Locale;
+import java.util.Queue;
 
 public class BinarySearchTree {
 
     protected Node root;
-
+    protected Queue<Node> queue;
     private final Collator usCollator = Collator.getInstance(Locale.US);
 
 
@@ -130,6 +133,37 @@ public class BinarySearchTree {
         } else {
             return searchForNode(rootNode.right, key);
         }
+
+    }
+
+    public Queue<Node> searchAll() {
+
+        queue = new LinkedList<>();
+        queue.add(root);
+
+        return searchAll(this.root, queue);
+
+    }
+
+    private Queue<Node> searchAll(Node root, Queue<Node> queue) {
+
+
+                if (root.left != null) {
+
+                    queue.add(root.left);
+                    searchAll(root.left, queue);
+
+                }
+                if (root.right != null) {
+
+                    queue.add(root.right);
+                    searchAll(root.right, queue);
+
+                }
+
+
+            return queue;
+
 
     }
 

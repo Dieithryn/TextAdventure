@@ -54,7 +54,6 @@ public class Window {
                 writer.close();
 
                 //update text area text continually
-                textArea.append("> " + input + "\n");
                 textField.setText("");
 
                 inputHandler.op(input);

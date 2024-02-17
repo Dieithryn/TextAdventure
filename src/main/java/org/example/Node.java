@@ -4,6 +4,7 @@ public class Node {
 
     protected Node left;
     protected Node right;
+    protected BinarySearchTree commandTree;
     protected String key;
     protected String text;
     protected int height;
@@ -37,6 +38,10 @@ public class Node {
         return null;
     }
 
+    public BinarySearchTree getCommandTree() {
 
+        return null;
+
+    }
 
 }

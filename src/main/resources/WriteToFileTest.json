@@ -1,0 +1,42 @@
+{
+"StateSnake" : {
+  "commands" : {
+    "gonorth" : "StateStart",
+    "gosouth" : "StateDark"
+  },
+  "stateText" : "You journey south. The rainforest thickens around you. The canopy above blots out the little light you had left from the overcast sky. A small snake slithers by your foot."
+},
+"StateDying" : {
+  "commands" : {
+    "gosouth" : "StateStart"
+  },
+  "stateText" : "You journey north. The rainforest thins. Chunks of canopy are missing from above revealing the overcast sky. The crunch of the leaves beneath your feet grows louder with each step. The trees are rotting."
+},
+"StateCliff" : {
+  "commands" : {
+    "gowest" : "StateStart"
+  },
+  "stateText" : "You journey east. The ground dips down with an easy slope before a sudden cliff that makes a valley with another across from it. You spy a cave on the adjacent cliff."
+},
+"StateRiver" : {
+  "commands" : {
+    "goeast" : "StateStart"
+  },
+  "stateText" : "You journey west. A wide river cuts your journey short. Rapidly fleeing water crashes against rocky outcroppings spraying droplets into the air."
+},
+"StateStart" : {
+  "commands" : {
+    "gosouth" : "StateSnake",
+    "gonorth" : "StateDying",
+    "goeast" : "StateCliff",
+    "gowest" : "StateRiver"
+  },
+  "stateText" : "You are in a rainforest. The it is silent save for a harsh wind blustering through the trees. The wildlife has taken shelter from the oncoming storm. You have a compass, a dead walkie-talkie, and 2 matches."
+},
+"StateZero" : {
+  "commands" : {
+    "" : "StateStart"
+  },
+  "stateText" : "Press enter to begin game."
+}
+}
