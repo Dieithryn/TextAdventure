@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -33,7 +32,6 @@ public class StatesController {
     private Inventory inventory;
     private BinarySearchTree stateTree;
     private BinarySearchTree commandsTree;
-    private Queue<Node> commandsQueue;
     private Iterator<String> statesIter;
     private Iterator<String> commandsIter;
     private JsonFactory factory;
@@ -56,7 +54,7 @@ public class StatesController {
         this.objectMapper = new ObjectMapper();
 
         try {
-            stateNode = objectMapper.readTree(new File("C:\\Users\\Luke\\IdeaProjects\\TextAdventure\\src\\main\\resources\\WriteToFileTest.json"));
+            stateNode = objectMapper.readTree(new File("C:\\Users\\Luke\\IdeaProjects\\TextAdventure\\src\\main\\resources\\StateTexts.json"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -75,13 +73,12 @@ public class StatesController {
                     while (commandsIter.hasNext()) {
 
                         commandName = commandsIter.next();
-                        commandsTree.root = commandsTree.insertNode(commandName, getNextState(stateName, commandName), null);
+                        commandsTree.root = commandsTree.insertNode(commandName, getNextState(stateName, commandName), null, null);
 
                     }
                 }
 
-            stateTree.root = stateTree.insertNode(stateName, getStateText(stateName), commandsTree);
-
+            stateTree.root = stateTree.insertNode(stateName, getStateText(stateName), getLookAround(stateName), commandsTree);
         }
 
         window.setTextArea(stateTree.searchForNode("StateZero").getText() + "\n");
@@ -102,10 +99,22 @@ public class StatesController {
         if (!states.getAdminState()) {
             window.setTextArea("> " + inputFromWindow + "\n");
             inputFromWindow = inputFromWindow.toLowerCase().replace(" ", "");
+
             try {
 
-                states.setCurrentState(stateTree.searchForNode(states.getCurrentState()).getCommandNode(inputFromWindow).getText());
-                window.setTextArea(getStateText(states.getCurrentState()) + "\n");
+                if (!inputFromWindow.equals("lookaround") && !inputFromWindow.equals("help")) {
+
+                    states.setCurrentState(stateTree.searchForNode(states.getCurrentState()).getCommandNode(inputFromWindow).getText());
+                    window.setTextArea(getStateText(states.getCurrentState()) + "\n");
+
+                } else if (inputFromWindow.equals("lookaround")){
+
+                    window.setTextArea(getLookAround(states.getCurrentState()) + "\n");
+
+                } else {
+
+                    window.setTextArea("Feeling stuck? Sorry about that. Here are a few tips: \n 1) Commands are typically 2-3 words \n 2) Important objects will always be described in the scene \n 3) When in doubt, 'Look around' for some extra guidance! \n");
+                }
 
             } catch (NullPointerException e) {
 
@@ -121,11 +130,12 @@ public class StatesController {
                 System.out.print("StateName: ");
                 stateNameInput = scanner.next();
 
-                commandsTree = new BinarySearchTree();
 
                 if (stateNameInput.equals("STOP")) {
                     break;
                 }
+
+                commandsTree = new BinarySearchTree();
 
                 do {
 
@@ -139,11 +149,11 @@ public class StatesController {
                     System.out.print("NextState: ");
                     nextStateInput = scanner.next();
 
-                    commandsTree.root = commandsTree.insertNode(commandInput, nextStateInput, null);
+                    commandsTree.root = commandsTree.insertNode(commandInput, nextStateInput, null, null);
 
                 } while (!commandInput.equals("END"));
 
-                stateTree.root = stateTree.insertNode(stateNameInput, "", commandsTree);
+                stateTree.root = stateTree.insertNode(stateNameInput, "", "", commandsTree);
 
             } while (!stateNameInput.equals("STOP"));
 
@@ -160,7 +170,7 @@ public class StatesController {
 
         try {
 
-            generator = factory.createGenerator(new File("C:\\Users\\Luke\\IdeaProjects\\TextAdventure\\src\\main\\resources\\WriteToFileTest.json"), JsonEncoding.UTF8);
+            generator = factory.createGenerator(new File("C:\\Users\\Luke\\IdeaProjects\\TextAdventure\\src\\main\\resources\\StateTexts.json"), JsonEncoding.UTF8);
             generator.writeStartObject();
             generator.useDefaultPrettyPrinter();
 
@@ -185,10 +195,11 @@ public class StatesController {
                                     throw new RuntimeException(e);
                                 }
                         });
-
                         generator.writeEndObject();
                         generator.writeFieldName("stateText");
                         generator.writeObject(i.getText());
+                        generator.writeFieldName("lookAround");
+                        generator.writeObject(i.getLookAround());
                         generator.writeEndObject();
 
                     } catch (IOException e) {
@@ -241,6 +252,19 @@ public class StatesController {
         try {
             stateTextNode = stateNode.get(stateName);
             stateTexts = objectMapper.writeValueAsString(stateTextNode.get("stateText"));
+            stateTexts = stateTexts.replace("\"", "");
+
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        return stateTexts;
+    }
+    private String getLookAround(String stateName) {
+
+        try {
+            stateTextNode = stateNode.get(stateName);
+            stateTexts = objectMapper.writeValueAsString(stateTextNode.get("lookAround"));
             stateTexts = stateTexts.replace("\"", "");
 
         } catch (JsonProcessingException e) {

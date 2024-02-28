@@ -4,17 +4,22 @@ public class StatesNode extends Node{
 
     protected BinarySearchTree commandTree;
 
-    public StatesNode(String key, String text, BinarySearchTree commandTree) {
+
+    public StatesNode(String key, String text, String lookAround, BinarySearchTree commandTree) {
 
         this.commandTree = commandTree;
         this.key = key;
         this.text = text;
+        this.lookAround = lookAround;
         this.height = 1;
         this.left = null;
         this.right = null;
 
     }
-    @Override
+    public String getLookAround() {
+        return lookAround;
+    }
+
     public Node getCommandNode(String command){
 
         return commandTree.searchForNode(command);
@@ -24,4 +29,6 @@ public class StatesNode extends Node{
     public BinarySearchTree getCommandTree() {
         return commandTree;
     }
+
+
 }

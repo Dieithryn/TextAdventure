@@ -19,12 +19,12 @@ public class BinarySearchTree {
         this.root = null;
 
     }
-    public Node insertNode(String stateName, String stateText, BinarySearchTree commandTree) {
+    public Node insertNode(String stateName, String stateText, String lookAround, BinarySearchTree commandTree) {
 
-        return insertNode(this.root, stateName, stateText, commandTree);
+        return insertNode(this.root, stateName, stateText, lookAround, commandTree);
 
     }
-    private Node insertNode(Node root, String stateName, String stateText, BinarySearchTree commandTree) {
+    private Node insertNode(Node root, String stateName, String stateText, String lookAround, BinarySearchTree commandTree) {
 
         usCollator.setStrength(Collator.PRIMARY);
 
@@ -36,17 +36,17 @@ public class BinarySearchTree {
 
         } else if (root == null && commandTree != null){
 
-            root = new StatesNode(stateName, stateText, commandTree);
+            root = new StatesNode(stateName, stateText, lookAround, commandTree);
             return root;
         }
 
         if (usCollator.compare(stateName, root.getKey()) < 0) {
 
-            root.left = insertNode(root.left, stateName, stateText, commandTree);
+            root.left = insertNode(root.left, stateName, stateText, lookAround, commandTree);
 
         } else if (usCollator.compare(stateName, root.getKey()) > 0) {
 
-            root.right = insertNode(root.right, stateName, stateText, commandTree);
+            root.right = insertNode(root.right, stateName, stateText, lookAround, commandTree);
 
         } else {
             return root;

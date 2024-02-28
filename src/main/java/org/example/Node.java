@@ -4,9 +4,9 @@ public class Node {
 
     protected Node left;
     protected Node right;
-    protected BinarySearchTree commandTree;
     protected String key;
     protected String text;
+    protected String lookAround;
     protected int height;
 
 
@@ -32,6 +32,9 @@ public class Node {
 
         return this.text;
 
+    }
+    public String getLookAround() {
+        return null;
     }
 
     public Node getCommandNode(String command) {
