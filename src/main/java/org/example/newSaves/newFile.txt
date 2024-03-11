@@ -1,0 +1,33 @@
+> 
+> Look around
+> go south
+> go south
+> 
+> go south
+> pick up snake
+> 
+> go south
+> pick up snake
+> 
+> inventory
+> 
+> Inventory
+> \
+> 
+> Inventory
+> 
+> go south
+> pick up snake
+> Inventory
+> 
+> go south
+> pick up snake
+> inventory
+> 
+> Go south
+> pick up snake
+> Inventory 
+> 
+> Inventory
+> 
+> Inventory

@@ -3,14 +3,14 @@
     "commands" : {
       "gosouth" : "StateStart"
     },
-    "stateText" : "You journey north. The rainforest thins. Chunks of canopy are missing from above revealing the overcast sky. The crunch of the leaves beneath your feet grows louder with each step. The trees are rotting.",
+    "stateText" : "The rainforest thins. Chunks of canopy are missing from above revealing the overcast sky. The crunch of the leaves beneath your feet grows louder with each step. The trees are rotting.",
     "lookAround" : ""
   },
   "StateCliff" : {
     "commands" : {
       "gowest" : "StateStart"
     },
-    "stateText" : "You journey east. The ground dips down with an easy slope before a sudden cliff that makes a valley with another across from it. You spy a cave on the adjacent cliff.",
+    "stateText" : "The ground dips down with an easy slope before a sudden cliff that makes a valley with another across from it. You spy a cave on the adjacent cliff.",
     "lookAround" : ""
   },
   "StateBench" : {
@@ -29,9 +29,9 @@
   },
   "StateBooth" : {
     "commands" : {
-      "entersecuritybooth" : "StateDoorLocked",
+      "entersecuritybooth" : "StateBoothDoorLocked",
       "entergate" : "StateCourtyard",
-      "kickopendoor" : "StateBooth",
+      "kickopendoor" : "StateBoothInterior",
       "goleft" : "StateCrack"
     },
     "stateText" : "",
@@ -64,14 +64,14 @@
       "gonorth" : "StateStart",
       "gosouth" : "StateDark"
     },
-    "stateText" : "You journey south. The rainforest thickens around you. The canopy above blots out the little light you had left from the overcast sky. A small snake slithers by your foot.",
+    "stateText" : "The rainforest thickens around you. The canopy above blots out the little light you had left from the overcast sky. A small snake slithers by your foot.",
     "lookAround" : ""
   },
   "StateRiver" : {
     "commands" : {
       "goeast" : "StateStart"
     },
-    "stateText" : "You journey west. A wide river cuts your journey short. Rapidly fleeing water crashes against rocky outcroppings spraying droplets into the air.",
+    "stateText" : "A wide river cuts your journey short. Rapidly fleeing water crashes against rocky outcroppings spraying droplets into the air.",
     "lookAround" : ""
   },
   "StateStart" : {

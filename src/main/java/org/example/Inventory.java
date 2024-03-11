@@ -33,9 +33,9 @@ public class Inventory {
 
     }
 
-    public int getQuantity(int i) {
+    public int getQuantity(int index) {
 
-        return items[i].getQuantity();
+        return items[index].getQuantity();
 
     }
 }

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Queue;
 import java.util.Scanner;
@@ -83,6 +84,9 @@ public class StatesController {
 
         window.setTextArea(stateTree.searchForNode("StateZero").getText() + "\n");
         states.setCurrentState(stateTree.searchForNode("StateZero").getKey());
+        inventory.setQuantity(0, 1);
+        inventory.setQuantity(1, 1);
+        inventory.setQuantity(2,2);
     }
 
     public void updateState(String inputFromWindow) {
@@ -102,19 +106,36 @@ public class StatesController {
 
             try {
 
-                if (!inputFromWindow.equals("lookaround") && !inputFromWindow.equals("help")) {
+                if (inputFromWindow.equals("lookaround")){
+
+                    window.setTextArea(getLookAround(states.getCurrentState()) + "\n");
+
+                } else if (inputFromWindow.equals("help")) {
+
+                    window.setTextArea("Feeling stuck? Sorry about that. Here are a few tips: \n 1) Commands are typically 2-3 words \n 2) Important objects will always be described in the scene \n 3) When in doubt, 'Look around' for some extra guidance! \n");
+
+                } else if (inputFromWindow.equals("pickupsnake") && states.getCurrentState().equals("StateSnake") && inventory.getQuantity(3) == 0) {
+
+                    inventory.setQuantity(3, 1);
+                    window.setTextArea("The snake has been added to your inventory");
+
+                } else if (inputFromWindow.equals("inventory")) {
+
+                    window.setTextArea("Inventory:\n");
+                    Arrays.stream(inventory.items).iterator().forEachRemaining(i -> {
+                        if (i.getQuantity() >= 1) {
+                            window.setTextArea(" - " + i.getName() + ": " + i.getQuantity() + "\n");
+                        }
+                    });
+
+                } else {
 
                     states.setCurrentState(stateTree.searchForNode(states.getCurrentState()).getCommandNode(inputFromWindow).getText());
                     window.setTextArea(getStateText(states.getCurrentState()) + "\n");
 
-                } else if (inputFromWindow.equals("lookaround")){
-
-                    window.setTextArea(getLookAround(states.getCurrentState()) + "\n");
-
-                } else {
-
-                    window.setTextArea("Feeling stuck? Sorry about that. Here are a few tips: \n 1) Commands are typically 2-3 words \n 2) Important objects will always be described in the scene \n 3) When in doubt, 'Look around' for some extra guidance! \n");
                 }
+
+
 
             } catch (NullPointerException e) {
 
